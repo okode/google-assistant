@@ -6,7 +6,7 @@ const app: express.Application = express.default();
 const port = 3000;
 
 app.use(bodyParser.json());
-app.use('/welcome', AssistantController);
+app.use('/', AssistantController);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);
