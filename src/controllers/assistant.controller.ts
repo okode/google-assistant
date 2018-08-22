@@ -9,4 +9,4 @@ router.post('/', (req: Request, res: Response) => {
   res.send(response);
 });
 
-export const WelcomeController = router;
+export const AssistantController = router;
