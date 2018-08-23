@@ -5,9 +5,9 @@ const app = dialogflow();
 const router = Router();
 router.use(app);
 
-app.intent('favorite color', (conv, params) => {
+app.intent('color favorito', (conv, params) => {
   const color = params['color']! as string;
-  conv.close(`Your number is ${color.length}`);
+  conv.close(`Tu número es ${color.length}`);
 });
 
 export const AssistantController = router;
