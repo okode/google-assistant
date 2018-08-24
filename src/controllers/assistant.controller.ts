@@ -10,7 +10,7 @@ router.use(app);
 
 app.intent('Default Welcome Intent', (conv, _) => {
   conv.ask(new Permission({
-    context: 'Hola, soy Salud Digital, para poder saber mejor de ti',
+    context: 'Hola, soy tu Asistente de Salud Digital, para poder saber mejor de ti',
     permissions: 'NAME'
   }));
 });
@@ -30,7 +30,7 @@ app.intent('Health Treatment Intent', (conv, params) => {
   return geodb.getTreatment(treatment).then(response => {
     const convData = conv.data as { userName?: string, [k: string]: any };
     const responseMessage = (response != null && response.assistant != null) ? response.assistant : `Lo siento, no sé mucho sobre ${treatment}`;
-    const closeMessage = (convData.userName ? `${convData.userName}, ` : '') + responseMessage;
+    const closeMessage = 'Muy bien, ' + (convData.userName ? `${convData.userName}, ` : '') + `lo que sé sobre ${treatment} es lo siguiente: ` + responseMessage;
     conv.close(closeMessage);
   })
 });
