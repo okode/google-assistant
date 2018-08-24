@@ -10,7 +10,7 @@ router.use(app);
 
 app.intent('Default Welcome Intent', (conv, _) => {
   conv.ask(new Permission({
-    context: 'Hola, para poder saber mejor de ti',
+    context: 'Hola, soy Salud Digital, para poder saber mejor de ti',
     permissions: 'NAME'
   }));
 });
@@ -28,8 +28,9 @@ app.intent('actions_intent_PERMISSION', (conv, _, permissionGranted) => {
 app.intent('Health Treatment Intent', (conv, params) => {
   const treatment = params['treatment']! as string;
   return geodb.getTreatment(treatment).then(response => {
-    const data = conv.data as { userName?: string, [k: string]: any };
-    const closeMessage = (data.userName ? `${data.userName}, ` : '') + response.assistant;
+    const convData = conv.data as { userName?: string, [k: string]: any };
+    const responseMessage = (response != null && response.assistant != null) ? response.assistant : `Lo siento, no sé mucho sobre ${treatment}`;
+    const closeMessage = (convData.userName ? `${convData.userName}, ` : '') + responseMessage;
     conv.close(closeMessage);
   })
 });
