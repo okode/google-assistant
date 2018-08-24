@@ -25,7 +25,7 @@ ngrok http 3000
 1. Build Docker image
 
 ```
-docker build -t okode/googleassistant
+docker build . -t okode/googleassistant
 ```
 
 3. Deploy image and configure fulfillment
