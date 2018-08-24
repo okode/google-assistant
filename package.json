@@ -21,7 +21,8 @@
   "homepage": "https://github.com/okode/google-assistant#readme",
   "dependencies": {
     "actions-on-google": "^2.3.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "typed-rest-client": "^1.0.9"
   },
   "devDependencies": {
     "@types/actions-on-google": "^1.10.2",

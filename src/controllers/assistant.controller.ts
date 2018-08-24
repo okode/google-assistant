@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import { dialogflow, Permission } from 'actions-on-google';
+import { GeoDBService } from '../services/geodb.service';
 
 const app = dialogflow();
 const router = Router();
+const geodb = new GeoDBService();
+
 router.use(app);
 
 app.intent('Default Welcome Intent', (conv, _) => {
@@ -13,23 +16,22 @@ app.intent('Default Welcome Intent', (conv, _) => {
 });
 
 app.intent('actions_intent_PERMISSION', (conv, _, permissionGranted) => {
-  if (!permissionGranted) {
-    conv.ask('Vale, no te preocupes. ¿Qué tratamiento quieres consultar?');
-  } else {
+  let greeting = 'Vale, no te preocupes.';
+  if (permissionGranted) {
     const data = conv.data as { userName?: string, [k: string]: any };
     data.userName = conv.user.name.display;
-    conv.ask(`Gracias, ${data.userName}. ¿Qué tratamiento quieres consultar?`);
+    greeting = `Gracias, ${data.userName}.`;
   }
+  conv.ask(`${greeting} ¿Qué tratamiento quieres consultar?`);
 });
 
-app.intent('medicina', (conv, params) => {
-  const tratamiento = params['tratamiento']! as string;
-  const data = conv.data as { userName?: string, [k: string]: any };
-  if (data.userName) {
-    conv.close(`${data.userName}, el tratamiento tiene una longitud de ${tratamiento.length} caracteres`);
-  } else {
-    conv.close(`El tratamiento ${tratamiento} tiene ${tratamiento.length} caracteres`);
-  }
+app.intent('Health Treatment Intent', (conv, params) => {
+  const treatment = params['treatment']! as string;
+  return geodb.getTreatment(treatment).then(response => {
+    const data = conv.data as { userName?: string, [k: string]: any };
+    const closeMessage = (data.userName ? `${data.userName}, ` : '') + response.assistant;
+    conv.close(closeMessage);
+  })
 });
 
 export const AssistantController = router;
