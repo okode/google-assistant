@@ -1,7 +1,7 @@
 {
   "name": "quote-day",
   "version": "1.0.0",
-  "description": "Quote of Day for Google Assistant.",
+  "description": "Health Sample App for Google Assistant.",
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
