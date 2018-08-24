@@ -26,7 +26,7 @@ app.intent('medicina', (conv, params) => {
   const tratamiento = params['tratamiento']! as string;
   const data = conv.data as { userName?: string, [k: string]: any };
   if (data.userName) {
-    conv.close(`${data.userName}, el tratamiento tiene ${tratamiento.length} caracteres`);
+    conv.close(`${data.userName}, el tratamiento tiene una longitud de ${tratamiento.length} caracteres`);
   } else {
     conv.close(`El tratamiento ${tratamiento} tiene ${tratamiento.length} caracteres`);
   }
